@@ -1,0 +1,8 @@
+music-player/
+├── index.html
+├── style.css
+├── script.js
+├── assets/
+│   ├── audio/
+│   └── images/
+└── REPORT.md
