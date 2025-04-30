@@ -1,0 +1,56 @@
+const songs = [
+    {
+        title: "Summer Vibes",
+        artist: "Chill Artist",
+        cover: "assets/images/cover.jpg",
+        audio: "assets/audio/song1.mp3"
+    },
+    // Add more songs as needed
+];
+
+const audio = document.getElementById('audio');
+const playBtn = document.getElementById('play');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const progressBar = document.querySelector('.progress-bar');
+const progressContainer = document.querySelector('.progress-container');
+const songTitle = document.querySelector('.song-title');
+const artist = document.querySelector('.artist');
+
+let isPlaying = false;
+
+function playSong() {
+    isPlaying = true;
+    audio.play();
+    playBtn.textContent = '⏸';
+}
+
+function pauseSong() {
+    isPlaying = false;
+    audio.pause();
+    playBtn.textContent = '▶';
+}
+
+function loadSong(song) {
+    songTitle.textContent = song.title;
+    artist.textContent = song.artist;
+    audio.src = song.audio;
+}
+
+// Event Listeners
+playBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()));
+
+progressContainer.addEventListener('click', (e) => {
+    const width = progressContainer.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+    audio.currentTime = (clickX / width) * duration;
+});
+
+audio.addEventListener('timeupdate', () => {
+    const progressPercent = (audio.currentTime / audio.duration) * 100;
+    progressBar.style.width = `${progressPercent}%`;
+});
+
+// Initialize first song
+loadSong(songs[0]);
